@@ -95,9 +95,9 @@ JB :
   comments :
     provider : duoshuo
     duoshuo :
-      short_name : liberize
+      short_name : CrazyWr
     disqus :
-      short_name : liberize
+      short_name : CrazyWr
     livefyre :
       site_id : 123
     intensedebate :
