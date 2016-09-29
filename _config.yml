@@ -34,8 +34,8 @@ author :
 # Else if you are pushing to username.github.io, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-production_url :
-cdn_url : 
+production_url : https://crazywr.github.io
+cdn_url : https://crazywr.github.io
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
@@ -115,7 +115,7 @@ JB :
   analytics :
     provider : baidu
     baidu :
-      tracking_id : 'a7c01c4b55f06cf1df9cabb9b18a65a3' 
+      tracking_id : 'f9565429b7e79ac61c94ba00b06743ae'
     google : 
       tracking_id : 'UA-41189818-1'
     getclicky :
