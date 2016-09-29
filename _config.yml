@@ -115,7 +115,7 @@ JB :
   analytics :
     provider : baidu
     baidu :
-      tracking_id : 'f9565429b7e79ac61c94ba00b06743ae'
+      tracking_id : 'b01ca29d8170acbf8a206d75c86ab9f4'
     google : 
       tracking_id : 'UA-41189818-1'
     getclicky :
