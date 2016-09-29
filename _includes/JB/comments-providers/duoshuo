@@ -3,7 +3,7 @@
 <div style="clear: both;"></div>
 {% endif %}
 <script type="text/javascript">
-var duoshuoQuery = {short_name: '{{ site.JB.comments.duoshuo.short_name }}'};
+var duoshuoQuery = {short_name: "{{ site.JB.comments.duoshuo.short_name }}"};
 (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;
