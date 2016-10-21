@@ -15,10 +15,10 @@ redcarpet:
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : CrazyWr's blog
-tagline: Free as the wind.
+title : WMonkey's blog
+tagline:
 author :
-  name : CrazyWr
+  name : WMonkey
   email : 18242982609@163.com
   github : CrazyWr
   twitter :
@@ -34,8 +34,8 @@ author :
 # Else if you are pushing to username.github.io, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-production_url : https://crazywr.github.io
-cdn_url : https://crazywr.github.io
+production_url : http://wmonkey.top
+cdn_url :
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
@@ -134,8 +134,8 @@ JB :
   # Settings for all other include helpers can be defined by creating 
   # a hash with key named for the given helper. ex:
   #
-  #   pages_list :
-  #     provider : "custom"   
+  #  pages_list :
+  #    provider : custom
   #
   # Setting any helper's provider to 'custom' will bypass the helper code
   # and include your custom code. Your custom file must be defined at:
