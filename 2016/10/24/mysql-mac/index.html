@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>MySQL 5.7 Mac EI 安装卸载 | 面向信仰</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">MySQL 5.7 Mac EI 安装卸载</h1><a id="logo" href="/.">面向信仰</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> HOME</i></a><a href="/archives/"><i class="fa fa-archive"> ARCHIVE</i></a><a href="/about/"><i class="fa fa-user"> ABOUT</i></a><a href="/book/"><i class="fa fa-book"> BOOK</i></a><a href="/wiki/"><i class="fa fa-list"> WIKI</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">MySQL 5.7 Mac EI 安装卸载</h1><div class="post-meta">Oct 24, 2016<span> | </span><span class="category"><a href="/categories/tech/">tech</a></span></div><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#重置root密码"><span class="toc-text">重置root密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#便捷设置"><span class="toc-text">便捷设置</span></a></li></ol></div></div><div class="post-content"><p>&emsp;&emsp; MySQL 5.7+ 安装成功以后会弹出一个临时密码 后面需要通过临时密码设置新的密码</p>
+<h2 id="重置root密码"><a href="#重置root密码" class="headerlink" title="重置root密码"></a>重置root密码</h2><p>安装成功后，使用临时密码登陆：敲入命令</p>
+<pre><code>mysqladmin -u root -p password
+</code></pre><p>这时会提醒你输入密码，输入临时密码登陆成功后，会再提醒你修改密码，修改完成后你就可以正常登陆了.</p>
+<p>如果没有保存密码有两个方式重置root密码:</p>
+<p>1.卸载重新安装 下面有卸载方式 dmg文件里面没有uninstall  只能手动安装</p>
+<p>卸载方式:(Mac)</p>
+<pre><code>sudo rm /usr/local/mysql
+sudo rm -rf /usr/local/mysql*
+sudo rm -rf /Library/StartupItems/MySQLCOM
+sudo rm -rf /Library/PreferencePanes/My*
+vim /etc/hostconfig  (and removed the line MYSQLCOM=-YES-)
+rm -rf ~/Library/PreferencePanes/My*
+sudo rm -rf /Library/Receipts/mysql*
+sudo rm -rf /Library/Receipts/MySQL*
+sudo rm -rf /var/db/receipts/com.mysql.*&quot;
+</code></pre><p>2.安全方式 更新root 密码 说实话 这种方式我的不好使(囧)</p>
+<p>MySQL修改密码<br>关闭服务<br>系统偏好设置->MySQL->Stop MySQL Server</p>
+<p>安全模式进入MySQL</p>
+<pre><code>jacob@JacobdeMacBook-Pro:~$ sudo mysqld_safe --skip-grant-tables
+</code></pre><p>重新打开一个终端 进入MySQL控制台</p>
+<pre><code>jacob@JacobdeMacBook-Pro:~$ mysql -u root
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.7.7-rc MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.
+提示已经成功进入控制台
+</code></pre><p>修改密码，sql语句</p>
+<pre><code>mysql&gt; update mysql.user set password=password(&apos;123456&apos;) where user=&apos;root&apos;;
+</code></pre><p>坑爹的地方来了，输入后报如下错误</p>
+<pre><code>ERROR 1054 (42S22): Unknown column &apos;password&apos; in &apos;field list&apos;
+神马情况，&apos;password&apos;列不存在，这个地方花了好多时间，原因其实很简单啊啊。
+</code></pre><p>MySQL 5.7 版本中 user表中的密码字段列名称变了，从password变成了authentication_string<br>可以直接看一下user表中的字段</p>
+<pre><code>mysql&gt; use mysql;
+mysql&gt; desc user;
+</code></pre><p>部分字段如下</p>
+<pre><code>Field   Type    Null    Key Default Extra
+Host    char(60)    NO  PRI      
+User    char(16)    NO  PRI      
+authentication_string   text    YES     NULL     
+password_expired    enum(‘N’,’Y’)   NO      N    
+password_last_changed   timestamp   YES     NULL     
+password_lifetime   smallint(5) unsigned    YES     NULL
+</code></pre><p>最后用如下如下语句修改</p>
+<pre><code>mysql&gt; update mysql.user set authentication_string=PASSWORD(&apos;123456&apos;) where user=&apos;root&apos;;
+Query OK, 1 row affected, 1 warning (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+mysql&gt; flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+</code></pre><p>修改成功，再次进入控制台</p>
+<pre><code>mysql&gt; show databases;
+</code></pre><p>这次可以进去了，但是随便执行一条语句依然报错啊</p>
+<pre><code>ERROR 1820 (HY000): You must SET PASSWORD before executing this statement
+</code></pre><p>按照提示再次设置密码</p>
+<pre><code>mysql&gt; set password for root@localhost=password(&apos;12345&apos;);
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+</code></pre><h2 id="便捷设置"><a href="#便捷设置" class="headerlink" title="便捷设置"></a>便捷设置</h2><p>为方便使用 MySQL</p>
+<p>方法1</p>
+<pre><code>cd /etc
+sudo chmod +w bashrc
+sudo vi bashrc
+
+在bashrc最后添加下面两行
+
+alias mysql=&apos;/usr/local/mysql/bin/mysql&apos;
+alias mysqladmin=&apos;/usr/local/mysql/bin/mysqladmin&apos;
+</code></pre><p>方法2</p>
+<pre><code>打开终端,输入： 
+    cd ~ 
+     会进入文件夹(表示用户根目录)
+然后输入：
+     touch .bash_profile;
+     回车执行
+再输入：
+     vim .bash_profile；
+     这时会在vim中打开这个文件（如果以前没有配置过环境变量，那么这应该是一个空白文档）。
+     如果有内容，即在结束符前输入，如果没有内容，直接输入如下语句：
+     export PATH=${PATH}:/usr/local/mysql/bin 然后保存，退出vim，关闭终端并退出。
+     重启机器。
+手动开启关闭MySQL
+
+sudo /usr/local/mysql/support-files/mysql.server start/stop
+</code></pre></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>BummingBoy</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="/2016/10/24/mysql-mac/">https://bummingboy.top/2016/10/24/mysql-mac/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>BummingBoy</li></ul></div><br><br><div class="tags"><a href="/tags/mac/">Mac</a><a href="/tags/mysql/">MySQL</a></div><div class="post-nav"><a class="pre" href="/2016/10/25/iOS-APPcrash/">iOS - 应用崩溃日志分析</a><a class="next" href="/2016/10/23/iOS-drawing/">iOS - 绘图(Core Graphics/QuartZ 2D)</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/centos-7/">Centos 7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">Chrome</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">Docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">Mac</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">Node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ios/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/shell/">shell</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tech/">tech</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/tuxera/" style="font-size: 15px;">Tuxera</a> <a href="/tags/centos7/" style="font-size: 15px;">Centos7</a> <a href="/tags/nginx/" style="font-size: 15px;">Nginx</a> <a href="/tags/linux/" style="font-size: 15px;">Linux</a> <a href="/tags/shadowsocks/" style="font-size: 15px;">shadowsocks</a> <a href="/tags/centos-7/" style="font-size: 15px;">Centos 7</a> <a href="/tags/python3/" style="font-size: 15px;">Python3</a> <a href="/tags/nodejs/" style="font-size: 15px;">Nodejs</a> <a href="/tags/docker/" style="font-size: 15px;">Docker</a> <a href="/tags/private-registry/" style="font-size: 15px;">private registry</a> <a href="/tags/chrome/" style="font-size: 15px;">Chrome</a> <a href="/tags/http/" style="font-size: 15px;">HTTP</a> <a href="/tags/长连接/" style="font-size: 15px;">长连接</a> <a href="/tags/短连接/" style="font-size: 15px;">短连接</a> <a href="/tags/javascript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/类型比较/" style="font-size: 15px;">类型比较</a> <a href="/tags/css/" style="font-size: 15px;">CSS</a> <a href="/tags/系统时间/" style="font-size: 15px;">系统时间</a> <a href="/tags/react/" style="font-size: 15px;">React</a> <a href="/tags/this/" style="font-size: 15px;">this</a> <a href="/tags/node/" style="font-size: 15px;">Node</a> <a href="/tags/浮点数/" style="font-size: 15px;">浮点数</a> <a href="/tags/mac/" style="font-size: 15px;">Mac</a> <a href="/tags/任何来源/" style="font-size: 15px;">任何来源</a> <a href="/tags/mongodb/" style="font-size: 15px;">MongoDB</a> <a href="/tags/gitlab/" style="font-size: 15px;">Gitlab</a> <a href="/tags/ntfs/" style="font-size: 15px;">NTFS</a> <a href="/tags/pm2/" style="font-size: 15px;">pm2</a> <a href="/tags/cluster/" style="font-size: 15px;">cluster</a> <a href="/tags/sketch-缓存/" style="font-size: 15px;">sketch 缓存</a> <a href="/tags/firewall/" style="font-size: 15px;">firewall</a> <a href="/tags/ios/" style="font-size: 15px;">iOS</a> <a href="/tags/崩溃日志/" style="font-size: 15px;">崩溃日志</a> <a href="/tags/commonjs/" style="font-size: 15px;">CommonJS</a> <a href="/tags/es6/" style="font-size: 15px;">ES6</a> <a href="/tags/import-export/" style="font-size: 15px;">import/export</a> <a href="/tags/du/" style="font-size: 15px;">du</a> <a href="/tags/沙盒路径/" style="font-size: 15px;">沙盒路径</a> <a href="/tags/mysql/" style="font-size: 15px;">MySQL</a> <a href="/tags/layers-of-ios/" style="font-size: 15px;">Layers of iOS</a> <a href="/tags/cocoa-touch/" style="font-size: 15px;">Cocoa Touch</a> <a href="/tags/绘图/" style="font-size: 15px;">绘图</a> <a href="/tags/core-graphics-quartz-2d/" style="font-size: 15px;">Core Graphics/QuartZ 2D</a> <a href="/tags/shell/" style="font-size: 15px;">shell</a> <a href="/tags/npm/" style="font-size: 15px;">npm</a> <a href="/tags/私有仓库/" style="font-size: 15px;">私有仓库</a> <a href="/tags/if/" style="font-size: 15px;">if</a> <a href="/tags/yum/" style="font-size: 15px;">yum</a> <a href="/tags/正则表达式/" style="font-size: 15px;">正则表达式</a> <a href="/tags/regex/" style="font-size: 15px;">RegEx</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/11/HTTP - 长连接 短连接/">Network - HTTP 长连接 短连接</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/11/JavaScript - the Ways to Bind JavaScript’s this Keyword in React, ES6 & ES7/">JavaScript - the Ways to Bind JavaScript’s this Keyword in React, ES6 & ES7</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/11/JavaScript - CSS3/">JavaScript - CSS3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/26/Node - pm2 cluster 模式无法使用babel-node启动/">Node - pm2 cluster 模式无法使用babel-node启动</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/25/Linux 服务器内部无法正常解析域名/">Linux 服务器内部无法正常解析域名</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/25/Chrome 阻止自动http 跳转 https/">Chrome 阻止自动http 跳转 https</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/25/JavaScript - 类型比较及判空/">JavaScript - 类型比较及判空</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/25/shell - 判断文件夹是否存在/">shell - 判断文件夹是否存在</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/25/shell - 条件判断if中的-a到-z的意思/">shell - 条件判断 if 中 -a 到 -z 的意思</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/05/commonjs vs ES6模块机制/">CommonJS vs ES6 import/export</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">面向信仰.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+   search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" src="/js/async_load_bg_image.js" async> </script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
