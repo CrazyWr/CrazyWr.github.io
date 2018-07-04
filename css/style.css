@@ -721,6 +721,8 @@ pre {
   border: 3px solid #eee; }
 
 @media (max-width: 768px) {
+  body {
+    padding: 0px; }
   #process .line {
     right: 10px; }
   #process .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label {
