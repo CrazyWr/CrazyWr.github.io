@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://bummingboy.top/2018/07/06/JavaScript%20-%20%E5%AE%9A%E6%97%B6%E5%99%A8/</loc>
+    
+    <lastmod>2018-07-06T10:08:31.285Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://bummingboy.top/2018/07/06/JavaScript%20-%20%E5%8E%9F%E5%9E%8B%E9%93%BE%E5%92%8C%E7%BB%A7%E6%89%BF/</loc>
+    
+    <lastmod>2018-07-06T10:08:07.927Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://bummingboy.top/2018/07/06/JavaScript%20-%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8F%8A%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/</loc>
+    
+    <lastmod>2018-07-06T10:06:02.477Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://bummingboy.top/2018/07/06/%10JavaScript%20-%20this%20%E5%8E%9F%E7%90%86/</loc>
+    
+    <lastmod>2018-07-06T10:06:02.442Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://bummingboy.top/book/index.html</loc>
+    
+    <lastmod>2018-07-06T09:37:47.449Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://bummingboy.top/2017/12/04/Centos7%20%E5%AE%89%E8%A3%85%20Docker%20Private%20Registry%20%E5%92%8C%20Web%20UI/</loc>
     
     <lastmod>2018-07-06T08:11:02.261Z</lastmod>
@@ -30,23 +65,9 @@
   </url>
   
   <url>
-    <loc>https://bummingboy.top/book/index.html</loc>
-    
-    <lastmod>2018-07-06T07:50:42.278Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://bummingboy.top/2016/10/21/zhengze/</loc>
     
     <lastmod>2018-07-06T07:32:14.747Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://bummingboy.top/2016/10/26/iOS-Cocoa-touch-layer/</loc>
-    
-    <lastmod>2018-07-03T12:03:58.460Z</lastmod>
     
   </url>
   
@@ -58,7 +79,7 @@
   </url>
   
   <url>
-    <loc>https://bummingboy.top/2018/05/11/JavaScript%20-%20CSS3/</loc>
+    <loc>https://bummingboy.top/2016/10/26/iOS-Cocoa-touch-layer/</loc>
     
     <lastmod>2018-07-03T12:03:58.460Z</lastmod>
     
@@ -66,6 +87,13 @@
   
   <url>
     <loc>https://bummingboy.top/2016/10/25/iOS-sanbox/</loc>
+    
+    <lastmod>2018-07-03T12:03:58.460Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://bummingboy.top/2018/05/11/JavaScript%20-%20CSS3/</loc>
     
     <lastmod>2018-07-03T12:03:58.460Z</lastmod>
     
@@ -219,13 +247,6 @@
   </url>
   
   <url>
-    <loc>https://bummingboy.top/2017/10/20/Mac%2010.12%20%E6%89%93%E5%BC%80%E4%BB%BB%E4%BD%95%E6%9D%A5%E6%BA%90/</loc>
-    
-    <lastmod>2018-07-03T10:26:11.664Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://bummingboy.top/2017/11/14/JavaScript%20%E6%B5%AE%E7%82%B9%E6%95%B0%E8%AE%A1%E7%AE%97%E5%92%8C%E6%AF%94%E8%BE%83/</loc>
     
     <lastmod>2018-07-03T10:26:11.664Z</lastmod>
@@ -233,9 +254,9 @@
   </url>
   
   <url>
-    <loc>https://bummingboy.top/2018/04/25/Linux%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%86%85%E9%83%A8%E6%97%A0%E6%B3%95%E6%AD%A3%E5%B8%B8%E8%A7%A3%E6%9E%90%E5%9F%9F%E5%90%8D/</loc>
+    <loc>https://bummingboy.top/2017/10/20/Mac%2010.12%20%E6%89%93%E5%BC%80%E4%BB%BB%E4%BD%95%E6%9D%A5%E6%BA%90/</loc>
     
-    <lastmod>2018-07-03T10:26:11.609Z</lastmod>
+    <lastmod>2018-07-03T10:26:11.664Z</lastmod>
     
   </url>
   
@@ -247,14 +268,21 @@
   </url>
   
   <url>
-    <loc>https://bummingboy.top/2017/09/15/Mac-OS-tuxera%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD/</loc>
+    <loc>https://bummingboy.top/2017/12/19/Linux%20%E4%BF%AE%E6%94%B9%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%97%B4%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95/</loc>
     
     <lastmod>2018-07-03T10:26:11.609Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://bummingboy.top/2017/12/19/Linux%20%E4%BF%AE%E6%94%B9%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%97%B4%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95/</loc>
+    <loc>https://bummingboy.top/2018/04/25/Linux%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%86%85%E9%83%A8%E6%97%A0%E6%B3%95%E6%AD%A3%E5%B8%B8%E8%A7%A3%E6%9E%90%E5%9F%9F%E5%90%8D/</loc>
+    
+    <lastmod>2018-07-03T10:26:11.609Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://bummingboy.top/2017/09/15/Mac-OS-tuxera%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD/</loc>
     
     <lastmod>2018-07-03T10:26:11.609Z</lastmod>
     
