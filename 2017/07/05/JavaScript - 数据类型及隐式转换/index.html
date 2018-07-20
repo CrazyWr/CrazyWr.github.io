@@ -17,20 +17,26 @@
 </li>
 </ul>
 <ul>
-<li>PreferredType = Number: </li>
+<li><p>PreferredType = Number: </p>
+<ol>
+<li>input 是原始值, 返回原始值;</li>
+<li>input 不是原始值, 调用 input.valueOf(); 如果返回值是原始值则返回原始值结果;</li>
+<li>如果 2 的结果不是原始值, 调用 input.toString(), 如果返回值是原始值则返回原始值结果;</li>
+<li>如果 3 的结果不是原始值, 抛出 TypeError 异常;</li>
+</ol>
+</li>
 </ul>
-<pre><code>1. input 是原始值, 返回原始值;
-2. input 不是原始值, 调用 input.valueOf(); 如果返回值是原始值则返回原始值结果;
-3. 如果 2 的结果不是原始值, 调用 input.toString(), 如果返回值是原始值则返回原始值结果;
-4. 如果 3 的结果不是原始值, 抛出 TypeError 异常;
-</code></pre><ul>
-<li>PreferredType = String: 类似于 Number </li>
+<ul>
+<li><p>PreferredType = String: 类似于 Number :</p>
+<ol>
+<li>input 是原始值, 返回原始值;</li>
+<li>input 不是原始值, 调用 input.toString(); 如果返回值是原始值则返回原始值结果;</li>
+<li>如果 2 的结果不是原始值, 调用 input.valueOf(), 如果返回值是原始值则返回原始值结果;</li>
+<li>如果 3 的结果不是原始值, 抛出 TypeError 异常;</li>
+</ol>
+</li>
 </ul>
-<pre><code>1. input 是原始值, 返回原始值;
-2. input 不是原始值, 调用 input.toString(); 如果返回值是原始值则返回原始值结果;
-3. 如果 2 的结果不是原始值, 调用 input.valueOf(), 如果返回值是原始值则返回原始值结果;
-4. 如果 3 的结果不是原始值, 抛出 TypeError 异常;
-</code></pre><h4 id="ToNumber"><a href="#ToNumber" class="headerlink" title="ToNumber"></a>ToNumber</h4>  <figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="literal">undefined</span>         <span class="literal">NaN</span></div><div class="line"><span class="literal">null</span>              +<span class="number">0</span></div><div class="line"><span class="built_in">boolean</span>           <span class="literal">true</span>: <span class="number">1</span>/ <span class="literal">false</span>: +<span class="number">0</span></div><div class="line"><span class="built_in">number</span>            <span class="built_in">number</span></div><div class="line"><span class="built_in">string</span>            <span class="string">'123'</span>: <span class="number">123</span> / <span class="string">'qwer'</span>: <span class="literal">NaN</span></div><div class="line">object            ToPrimitive(input, <span class="built_in">Number</span>).ToNumber()</div></pre></td></tr></table></figure>
+<h4 id="ToNumber"><a href="#ToNumber" class="headerlink" title="ToNumber"></a>ToNumber</h4>  <figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="literal">undefined</span>         <span class="literal">NaN</span></div><div class="line"><span class="literal">null</span>              +<span class="number">0</span></div><div class="line"><span class="built_in">boolean</span>           <span class="literal">true</span>: <span class="number">1</span>/ <span class="literal">false</span>: +<span class="number">0</span></div><div class="line"><span class="built_in">number</span>            <span class="built_in">number</span></div><div class="line"><span class="built_in">string</span>            <span class="string">'123'</span>: <span class="number">123</span> / <span class="string">'qwer'</span>: <span class="literal">NaN</span></div><div class="line">object            ToPrimitive(input, <span class="built_in">Number</span>).ToNumber()</div></pre></td></tr></table></figure>
 <h4 id="ToString"><a href="#ToString" class="headerlink" title="ToString"></a>ToString</h4>  <figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="literal">undefined</span>         <span class="string">"undefined"</span></div><div class="line"><span class="literal">null</span>              <span class="string">"null"</span></div><div class="line"><span class="built_in">boolean</span>           <span class="literal">true</span>: <span class="string">"true"</span>/ <span class="literal">false</span>: <span class="string">"false"</span></div><div class="line"><span class="built_in">number</span>            <span class="string">"number"</span></div><div class="line"><span class="built_in">string</span>            <span class="built_in">string</span></div><div class="line">object            ToPrimitive(input, <span class="built_in">String</span>).ToString()</div></pre></td></tr></table></figure>
 <h5 id="valueOf方法和toString方法详解"><a href="#valueOf方法和toString方法详解" class="headerlink" title="valueOf方法和toString方法详解"></a>valueOf方法和toString方法详解</h5><p>  首先 valueOf() 和 toString() 是 Object.prototype 的方法, 也就是所有的对象都有这两个方法;</p>
 <ul>
