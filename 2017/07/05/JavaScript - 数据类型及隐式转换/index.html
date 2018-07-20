@@ -8,94 +8,49 @@
 <li>将值转化为字符串 ToString();</li>
 </ul>
 <h4 id="ToPrimitive-input-PreferredType"><a href="#ToPrimitive-input-PreferredType" class="headerlink" title="ToPrimitive(input, PreferredType?)"></a>ToPrimitive(input, PreferredType?)</h4><p>  input是要转换的值，PreferredType是可选参数，可以是Number或String类型, 只是一个转换标志，转化后的结果并不一定是这个参数所值的类型，但是转换结果一定是一个原始值(或者报错), 也就是说设置 Number 时也可能转换为 string, 设置为 String 时 也可能转化为 Number;</p>
-<p>  当 PreferredType 未设置时, 按照下面规则设置:</p>
-  <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span>. input 是 Date 类型时, <span class="keyword">PreferredType </span>= String<span class="comment">;</span></div><div class="line"><span class="number">2</span>. 否则, <span class="keyword">PreferredType </span>= Number<span class="comment">;</span></div></pre></td></tr></table></figure>
-<p>  PreferredType = Number: </p>
-  <figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">  1. <span class="keyword">input</span> 是原始值, 返回原始值;</div><div class="line">  2. <span class="keyword">input</span> 不是原始值, 调用 <span class="keyword">input</span>.valueOf(); 如果返回值是原始值则返回原始值结果;</div><div class="line">  3. 如果 2 的结果不是原始值, 调用 <span class="keyword">input</span>.<span class="keyword">toString</span>(), 如果返回值是原始值则返回原始值结果;</div><div class="line">  4. 如果 3 的结果不是原始值, 抛出 TypeError 异常</div><div class="line">```  </div><div class="line"></div><div class="line">PreferredType = String: 类似于 Number</div></pre></td></tr></table></figure>
-<pre><code>1. input 是原始值, 返回原始值;
-2. input 不是原始值, 调用 input.toString(); 如果返回值是原始值则返回原始值结果;
-3. 如果 2 的结果不是原始值, 调用 input.valueOf(), 如果返回值是原始值则返回原始值结果;
-4. 如果 3 的结果不是原始值, 抛出 TypeError 异常
-</code></pre>  <figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">#### ToNumber</div></pre></td></tr></table></figure>
-<pre><code>undefined         NaN
-null              +0
-boolean           true: 1/ false: +0
-number            number
-string            &apos;123&apos;: 123 / &apos;qwer&apos;: NaN
-object            ToPrimitive(input, Number).ToNumber()
-</code></pre>  <figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">#### ToString</div></pre></td></tr></table></figure>
-<pre><code>undefined         &quot;undefined&quot;
-null              &quot;null&quot;
-boolean           true: &quot;true&quot;/ false: &quot;false&quot;
-number            &quot;number&quot;
-string            string
-object            ToPrimitive(input, String).ToString()
-</code></pre>  <figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">##### valueOf方法和toString方法详解</div><div class="line">  首先 valueOf() 和 toString() 是 Object.prototype 的方法, 也就是所有的对象都有这两个方法;</div><div class="line">  </div><div class="line">  - valueOf()    _**总的原则是能转化为原始值则转化为原始值, 不能转化为原始值的返回 this, 也就是对象本身, Date 对象转化为 毫秒级数值**_</div></pre></td></tr></table></figure>
-<pre><code>  Number(&apos;123&apos;).valueOf() // 123
-  String(&apos;123fs&apos;).valueOf() // &apos;123fs&apos;
-  Boolean(true).valueOf() // true
-
-  new Date().valueOf() // 1530706938289
-
-  var arr = [&apos;1&apos;, &apos;2&apos;];
-  arr.valueOf() // [ &apos;1&apos;, &apos;2&apos; ] === arr  =&gt; true  等于 自身
-
-  var obj = {};
-  obj.valueOf() // {} === obj   =&gt;   true  等于自身
+<ul>
+<li><p>当 PreferredType 未设置时, 按照下面规则设置:</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span>. input 是 Date 类型时, <span class="keyword">PreferredType </span>= String<span class="comment">;</span></div><div class="line"><span class="number">2</span>. 否则, <span class="keyword">PreferredType </span>= Number<span class="comment">;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>PreferredType = Number: </p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">  1. <span class="keyword">input</span> 是原始值, 返回原始值;</div><div class="line">  2. <span class="keyword">input</span> 不是原始值, 调用 <span class="keyword">input</span>.valueOf(); 如果返回值是原始值则返回原始值结果;</div><div class="line">  3. 如果 2 的结果不是原始值, 调用 <span class="keyword">input</span>.<span class="keyword">toString</span>(), 如果返回值是原始值则返回原始值结果;</div><div class="line">  4. 如果 3 的结果不是原始值, 抛出 TypeError 异常</div><div class="line">```  </div><div class="line"></div><div class="line">- PreferredType = String: 类似于 Number</div></pre></td></tr></table></figure>
+<ol>
+<li>input 是原始值, 返回原始值;</li>
+<li>input 不是原始值, 调用 input.toString(); 如果返回值是原始值则返回原始值结果;</li>
+<li>如果 2 的结果不是原始值, 调用 input.valueOf(), 如果返回值是原始值则返回原始值结果;</li>
+<li>如果 3 的结果不是原始值, 抛出 TypeError 异常</li>
+</ol>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">#### ToNumber</div></pre></td></tr></table></figure>
+<p>undefined         NaN<br>null              +0<br>boolean           true: 1/ false: +0<br>number            number<br>string            ‘123’: 123 / ‘qwer’: NaN<br>object            ToPrimitive(input, Number).ToNumber()</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">#### ToString</div></pre></td></tr></table></figure>
+<p>undefined         “undefined”<br>null              “null”<br>boolean           true: “true”/ false: “false”<br>number            “number”<br>string            string<br>object            ToPrimitive(input, String).ToString()</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">##### valueOf方法和toString方法详解</div><div class="line"></div><div class="line">  首先 valueOf() 和 toString() 是 Object.prototype 的方法, 也就是所有的对象都有这两个方法;</div><div class="line">  </div><div class="line">  - valueOf()    _**总的原则是能转化为原始值则转化为原始值, 不能转化为原始值的返回 this, 也就是对象本身, Date 对象转化为 毫秒级数值**_</div></pre></td></tr></table></figure>
+<p>  Number(‘123’).valueOf() // 123<br>  String(‘123fs’).valueOf() // ‘123fs’<br>  Boolean(true).valueOf() // true</p>
+<p>  new Date().valueOf() // 1530706938289</p>
+<p>  var arr = [‘1’, ‘2’];<br>  arr.valueOf() // [ ‘1’, ‘2’ ] === arr  =&gt; true  等于 自身</p>
+<p>  var obj = {};<br>  obj.valueOf() // {} === obj   =&gt;   true  等于自身</p>
 <figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line"><span class="selector-tag">-</span> <span class="selector-tag">toString</span>()  <span class="selector-tag">_</span>**将对象转化成字符串形式, 重写了 <span class="selector-tag">toString</span>() 的调用自己的 <span class="selector-tag">toString</span>() 方法, 其余的调用 <span class="selector-tag">Object</span><span class="selector-class">.prototype</span><span class="selector-class">.toString</span>() **<span class="selector-tag">_</span></div></pre></td></tr></table></figure>
-
-  Number.prototype.hasOwnProperty(&apos;toString&apos;); // true
-  Boolean.prototype.hasOwnProperty(&apos;toString&apos;); // true
-  String.prototype.hasOwnProperty(&apos;toString&apos;); // true
-  Array.prototype.hasOwnProperty(&apos;toString&apos;); // true
-  Date.prototype.hasOwnProperty(&apos;toString&apos;); // true
-  RegExp.prototype.hasOwnProperty(&apos;toString&apos;); // true
-  Function.prototype.hasOwnProperty(&apos;toString&apos;); // 
-
-  var num = new Number(&apos;123sd&apos;);
-  num.toString(); // &apos;NaN&apos;
-
-  var str = new String(&apos;12df&apos;);
-  str.toString(); // &apos;12df&apos;
-
-  var bool = new Boolean(&apos;fd&apos;);
-  bool.toString(); // &apos;true&apos;
-
-  var arr = new Array(1,2);
-  arr.toString(); // &apos;1,2&apos;
-
-  var d = new Date();
-  d.toString(); // &quot;Wed Jul 04 2018 20:22:09 GMT+0800 (CST)&quot;
-
-  var func = function () {}
-  func.toString(); // &quot;function () {}&quot;
-
-  var obj = new Object({});
-  obj.toString(); // &quot;[object Object]&quot;
-
-  Math.toString(); // &quot;[object Math]&quot;
-
+<p>  Number.prototype.hasOwnProperty(‘toString’); // true<br>  Boolean.prototype.hasOwnProperty(‘toString’); // true<br>  String.prototype.hasOwnProperty(‘toString’); // true<br>  Array.prototype.hasOwnProperty(‘toString’); // true<br>  Date.prototype.hasOwnProperty(‘toString’); // true<br>  RegExp.prototype.hasOwnProperty(‘toString’); // true<br>  Function.prototype.hasOwnProperty(‘toString’); // </p>
+<p>  var num = new Number(‘123sd’);<br>  num.toString(); // ‘NaN’</p>
+<p>  var str = new String(‘12df’);<br>  str.toString(); // ‘12df’</p>
+<p>  var bool = new Boolean(‘fd’);<br>  bool.toString(); // ‘true’</p>
+<p>  var arr = new Array(1,2);<br>  arr.toString(); // ‘1,2’</p>
+<p>  var d = new Date();<br>  d.toString(); // “Wed Jul 04 2018 20:22:09 GMT+0800 (CST)”</p>
+<p>  var func = function () {}<br>  func.toString(); // “function () {}”</p>
+<p>  var obj = new Object({});<br>  obj.toString(); // “[object Object]”</p>
+<p>  Math.toString(); // “[object Math]”</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">    </div><div class="line"></div><div class="line">### 隐式转换的例子</div></pre></td></tr></table></figure>
-
-&apos;&apos; == 0     // true 
-&apos;0&apos; == 0    // true
-&apos;0&apos; == &apos;&apos;   // false类型相同 不进行隐式转换
-[] == !{}   // []==false  =&gt;  &apos;&apos;==0  =&gt;  0==0  =&gt;  true
-({} + {}) = ?  // &quot;[object Object]&quot; + &quot;[object Object]&quot; = &quot;[object Object][object Object]&quot;
-2 * {} = ?  // 2 * NaN = NaN
-2 * [] = ?  // 2 * &apos;&apos;.toString() = 2 * 0 = 0
-</code></pre>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"> </div></pre></td></tr></table></figure>
-<pre><code>const a = {
-  i: 1,
-  toString: function () {
-    return a.i++;
-  }
-}
-if (a == 1 &amp;&amp; a == 2 &amp;&amp; a == 3) {
-  console.log(&apos;hello world!&apos;);
-}
-</code></pre><p>  ```</p>
-<p>  1、当执行a == 1 &amp;&amp; a == 2 &amp;&amp; a == 3 时，会从左到右一步一步解析，首先 a ==  1，会进行上面第9步转换。ToPrimitive(a， Number) == 1。<br>  2、ToPrimitive(a, Number)，按照上面原始类型转换规则，会先调用valueOf方法，a的valueOf方法继承自Object.prototype。返回a本身，而非原始类型，故会调用toString方法。<br>  3、因为toString被重写，所以会调用重写的toString方法，故返回1，注意这里是i++，而不是++i，它会先返回i，在将i+1。故ToPrimitive(a, Number) = 1。也就是1 == 1，此时i = 1 + 1 = 2。<br>  4、执行完a == 1返回true，会执行a == 2，同理，会调用ToPrimitive(a, Number)，同上先调用valueOf方法，在调用toString方法，由于第一步，i = 2此时，ToPrimitive(a, Number) = 2， 也就是2 == 2, 此时i = 2 + 1。<br>  5、同上可以推导 a == 3也返回true。故最终结果 a == 1 &amp;&amp; a == 2 &amp;&amp; a == 3返回true</p>
+<p>‘’ == 0     // true<br>‘0’ == 0    // true<br>‘0’ == ‘’   // false类型相同 不进行隐式转换<br>[] == !{}   // []==false  =&gt;  ‘’==0  =&gt;  0==0  =&gt;  true<br>({} + {}) = ?  // “[object Object]” + “[object Object]” = “[object Object][object Object]”<br>2 <em> {} = ?  // 2 </em> NaN = NaN<br>2 <em> [] = ?  // 2 </em> ‘’.toString() = 2 * 0 = 0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"> </div></pre></td></tr></table></figure>
+<p>const a = {<br>  i: 1,<br>  toString: function () {</p>
+<pre><code>return a.i++;
+</code></pre><p>  }<br>}<br>if (a == 1 &amp;&amp; a == 2 &amp;&amp; a == 3) {<br>  console.log(‘hello world!’);<br>}</p>
+<p>```</p>
+<p>1、当执行a == 1 &amp;&amp; a == 2 &amp;&amp; a == 3 时，会从左到右一步一步解析，首先 a ==  1，会进行上面第9步转换。ToPrimitive(a， Number) == 1。<br>2、ToPrimitive(a, Number)，按照上面原始类型转换规则，会先调用valueOf方法，a的valueOf方法继承自Object.prototype。返回a本身，而非原始类型，故会调用toString方法。<br>3、因为toString被重写，所以会调用重写的toString方法，故返回1，注意这里是i++，而不是++i，它会先返回i，在将i+1。故ToPrimitive(a, Number) = 1。也就是1 == 1，此时i = 1 + 1 = 2。<br>4、执行完a == 1返回true，会执行a == 2，同理，会调用ToPrimitive(a, Number)，同上先调用valueOf方法，在调用toString方法，由于第一步，i = 2此时，ToPrimitive(a, Number) = 2， 也就是2 == 2, 此时i = 2 + 1。<br>5、同上可以推导 a == 3也返回true。故最终结果 a == 1 &amp;&amp; a == 2 &amp;&amp; a == 3返回true</p>
+</li>
+</ul>
 </div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>BummingBoy</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="/2017/07/05/JavaScript - 数据类型及隐式转换/">https://bummingboy.top/2017/07/05/JavaScript - 数据类型及隐式转换/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>BummingBoy</li></ul></div><br><br><div class="tags"><a href="/tags/javascript/">JavaScript</a><a href="/tags/数据类型/">数据类型</a><a href="/tags/隐式转换/">隐式转换</a></div><div class="post-nav"><a class="pre" href="/2017/07/05/JavaScript - 类型比较及判空/">JavaScript - 类型比较及判空</a><a class="next" href="/2017/07/05/JavaScript - 定时器/">JavaScript - 定时器</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">JavaScript</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">Linux</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/centos-7/">Centos 7</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">Mac</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">Network</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">Node</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ios/">iOS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/shell/">shell</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tech/">tech</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/cluster/" style="font-size: 15px;">cluster</a> <a href="/tags/centos7/" style="font-size: 15px;">Centos7</a> <a href="/tags/nginx/" style="font-size: 15px;">Nginx</a> <a href="/tags/linux/" style="font-size: 15px;">Linux</a> <a href="/tags/shadowsocks/" style="font-size: 15px;">shadowsocks</a> <a href="/tags/centos-7/" style="font-size: 15px;">Centos 7</a> <a href="/tags/python3/" style="font-size: 15px;">Python3</a> <a href="/tags/nodejs/" style="font-size: 15px;">Nodejs</a> <a href="/tags/docker/" style="font-size: 15px;">Docker</a> <a href="/tags/private-registry/" style="font-size: 15px;">private registry</a> <a href="/tags/chrome/" style="font-size: 15px;">Chrome</a> <a href="/tags/http/" style="font-size: 15px;">HTTP</a> <a href="/tags/长连接/" style="font-size: 15px;">长连接</a> <a href="/tags/短连接/" style="font-size: 15px;">短连接</a> <a href="/tags/javascript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/类型比较/" style="font-size: 15px;">类型比较</a> <a href="/tags/css/" style="font-size: 15px;">CSS</a> <a href="/tags/系统时间/" style="font-size: 15px;">系统时间</a> <a href="/tags/react/" style="font-size: 15px;">React</a> <a href="/tags/this/" style="font-size: 15px;">this</a> <a href="/tags/node/" style="font-size: 15px;">Node</a> <a href="/tags/浮点数/" style="font-size: 15px;">浮点数</a> <a href="/tags/mac/" style="font-size: 15px;">Mac</a> <a href="/tags/任何来源/" style="font-size: 15px;">任何来源</a> <a href="/tags/mongodb/" style="font-size: 15px;">MongoDB</a> <a href="/tags/tuxera/" style="font-size: 15px;">Tuxera</a> <a href="/tags/ntfs/" style="font-size: 15px;">NTFS</a> <a href="/tags/pm2/" style="font-size: 15px;">pm2</a> <a href="/tags/gitlab/" style="font-size: 15px;">Gitlab</a> <a href="/tags/sketch-缓存/" style="font-size: 15px;">sketch 缓存</a> <a href="/tags/firewall/" style="font-size: 15px;">firewall</a> <a href="/tags/ios/" style="font-size: 15px;">iOS</a> <a href="/tags/崩溃日志/" style="font-size: 15px;">崩溃日志</a> <a href="/tags/commonjs/" style="font-size: 15px;">CommonJS</a> <a href="/tags/es6/" style="font-size: 15px;">ES6</a> <a href="/tags/import-export/" style="font-size: 15px;">import/export</a> <a href="/tags/du/" style="font-size: 15px;">du</a> <a href="/tags/沙盒路径/" style="font-size: 15px;">沙盒路径</a> <a href="/tags/mysql/" style="font-size: 15px;">MySQL</a> <a href="/tags/layers-of-ios/" style="font-size: 15px;">Layers of iOS</a> <a href="/tags/cocoa-touch/" style="font-size: 15px;">Cocoa Touch</a> <a href="/tags/绘图/" style="font-size: 15px;">绘图</a> <a href="/tags/core-graphics-quartz-2d/" style="font-size: 15px;">Core Graphics/QuartZ 2D</a> <a href="/tags/shell/" style="font-size: 15px;">shell</a> <a href="/tags/npm/" style="font-size: 15px;">npm</a> <a href="/tags/私有仓库/" style="font-size: 15px;">私有仓库</a> <a href="/tags/if/" style="font-size: 15px;">if</a> <a href="/tags/yum/" style="font-size: 15px;">yum</a> <a href="/tags/正则表达式/" style="font-size: 15px;">正则表达式</a> <a href="/tags/regex/" style="font-size: 15px;">RegEx</a> <a href="/tags/定时器/" style="font-size: 15px;">定时器</a> <a href="/tags/原型链和继承/" style="font-size: 15px;">原型链和继承</a> <a href="/tags/数据类型/" style="font-size: 15px;">数据类型</a> <a href="/tags/隐式转换/" style="font-size: 15px;">隐式转换</a> <a href="/tags/状态码/" style="font-size: 15px;">状态码</a> <a href="/tags/各版本对比/" style="font-size: 15px;">各版本对比</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">面向信仰.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
 if (search_path.length == 0) {
    search_path = 'search.xml';
